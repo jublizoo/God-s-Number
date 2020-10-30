@@ -52,8 +52,8 @@ public class Main {
 		System.out.println("Would you like a solved or random cube?");
 		input1 = s.getInput();
 		c = new Cube(input1);
-		System.out.println(c.state);
 		
+		/*Displays every piece
 		for(int i = 0; i < 6; i++) {
 			for(int a = 0; a < 3; a++) {
 				for(int b = 0; b < 3; b++) {
@@ -61,9 +61,12 @@ public class Main {
 				}
 			}
 		}
+		*/
+		
 	}
 	
 	public static void unrecognized() {
 		System.out.println("Command not recognized.");
+		
 	}
 }

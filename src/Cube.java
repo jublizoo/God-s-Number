@@ -29,10 +29,11 @@ public class Cube {
 				}
 			}
 		}
+		
 	}
 	
 	public void R(boolean prime) {
-		
+		Color[][][] temp = new Color[6][3][3];
 	}
 	
 	public void U(boolean prime) {
