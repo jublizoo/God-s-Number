@@ -77,7 +77,6 @@ public class Cube {
 		state[3][5] = temp[3][4];
 		state[3][6] = temp[3][5];
 		state[3][7] = temp[3][6];
-		
 	}
 
 	public void U() {
@@ -113,7 +112,35 @@ public class Cube {
 		
 	}
 
-	public void F(boolean prime) {
+	public void F() {
+		int[][] temp = new int[6][8];
+		
+		for(int i = 0; i < 6; i++) {
+			for(int b = 0; b < 8; b++) {
+				temp[i][b] = state[i][b];
+			}
+		}
+		state[0][3] = temp[1][3];
+		state[0][6] = temp[1][6];
+		state[0][2] = temp[1][2];
+		state[3][3] = temp[0][3];
+		state[3][6] = temp[0][6];
+		state[3][2] = temp[0][2];
+		state[5][1] = temp[3][3];
+		state[5][4] = temp[3][6];
+		state[5][0] = temp[3][2];
+		state[1][3] = temp[5][0];
+		state[1][6] = temp[5][4];
+		state[1][2] = temp[5][1];
+
+		state[2][0] = temp[2][3];
+		state[2][1] = temp[2][0];
+		state[2][2] = temp[2][1];
+		state[2][3] = temp[2][2];
+		state[2][4] = temp[2][7];
+		state[2][5] = temp[2][4];
+		state[2][6] = temp[2][5];
+		state[2][7] = temp[2][6];
 
 	}
 
