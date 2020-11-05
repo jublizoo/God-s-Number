@@ -9,8 +9,6 @@ public class Cube {
 	int[][] state = new int[6][8];
 	Color[] colors = {Color.YELLOW, Color.RED, Color.GREEN, Color.ORANGE, Color.BLUE, Color.WHITE};
 
-	// TODO: Figure out a way to store the position of a Rubik's cube
-
 	/*
 	 * Class contructor which will create a new scramble based on the string
 	 * parameter. It can create a solved, or random cube, but if the string
@@ -148,7 +146,36 @@ public class Cube {
 
 	}
 
-	public void D(boolean prime) {
+	public void D() {
+		int[][] temp = new int[6][8];
+		
+		for(int i = 0; i < 6; i++) {
+			for(int b = 0; b < 8; b++) {
+				temp[i][b] = state[i][b];
+			}
+		}
+		
+		state[1][3] = temp[4][1];
+		state[1][6] = temp[4][4];
+		state[1][2] = temp[4][0];
+		state[2][3] = temp[1][3];
+		state[2][6] = temp[1][6];
+		state[2][2] = temp[1][2];
+		state[3][3] = temp[2][3];
+		state[3][6] = temp[2][6];
+		state[3][2] = temp[2][2];
+		state[4][1] = temp[3][3];
+		state[4][4] = temp[3][6];
+		state[4][0] = temp[3][2];
+		
+		state[5][0] = temp[5][3];
+		state[5][1] = temp[5][0];
+		state[5][2] = temp[5][1];
+		state[5][3] = temp[5][2];
+		state[5][4] = temp[5][7];
+		state[5][5] = temp[5][4];
+		state[5][6] = temp[5][5];
+		state[5][7] = temp[5][6];
 
 	}
 

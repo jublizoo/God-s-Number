@@ -9,6 +9,9 @@ public class Main {
 	static Scan s;
 	static Display d;
 	
+	//TODO Add L, D, and B moves
+	//TODO Get random scrambles
+	
 	// Just initializes the scanner, creates a new JFrame (Java Display Window) and
 	// lets the display class use that JFrame for graphics, and then starts the run
 	// function
@@ -81,6 +84,16 @@ public class Main {
 				c.F();
 				c.F();
 				c.F();
+				d.repaint();
+				break;
+			case "d":
+				c.D();
+				d.repaint();
+				break;
+			case "dp":
+				c.D();
+				c.D();
+				c.D();
 				d.repaint();
 				break;
 			default:
@@ -169,9 +182,11 @@ public class Main {
 				break;
 			case "d":
 				if(prime) {
-					
+					c.D();
+					c.D();
+					c.D();
 				}else {
-					
+					c.D();
 				}
 				break;
 			case "b":
