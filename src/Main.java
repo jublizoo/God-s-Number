@@ -72,7 +72,17 @@ public class Main {
 				c.U();
 				c.U();
 				d.repaint();
-				break;			
+				break;
+			case "f":
+				c.F();
+				d.repaint();
+				break;
+			case "fp";
+				c.F();
+				c.F();
+				c.F();
+				d.repaint();
+				break;
 			default:
 				unrecognized();
 			}
