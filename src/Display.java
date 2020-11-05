@@ -17,7 +17,7 @@ public class Display extends JPanel {
 	//The X and Y positions of the faces 0 - 5 and pieces 0 -7
 	int[][] facePos = {{1, 0, 1, 2, 1, 1}, {1, 1, 2, 1, 0, 3}};
 	int[][] piecePos = {{0, 2, 2, 0, 1, 2, 1, 0}, {0, 0, 2, 2, 0, 1, 2, 1}};
-
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		faceSize = Main.f.getContentPane().getHeight() / 4;

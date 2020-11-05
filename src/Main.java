@@ -54,9 +54,25 @@ public class Main {
 				cubeSetup();
 				break;
 			case "r":
-				c.R(false);
+				c.R();
 				d.repaint();
 				break;
+			case "rp":
+				c.R();
+				c.R();
+				c.R();
+				d.repaint();
+				break;
+			case "u":
+				c.U();
+				d.repaint();
+				break;
+			case "up":
+				c.U();
+				c.U();
+				c.U();
+				d.repaint();
+				break;			
 			default:
 				unrecognized();
 			}
