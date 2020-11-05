@@ -162,9 +162,11 @@ public class Main {
 				break;
 			case "l":
 				if(prime) {
-					
+					c.L();
+					c.L();
+					c.L();
 				}else {
-					
+					c.L();
 				}
 				break;
 			case "d":
