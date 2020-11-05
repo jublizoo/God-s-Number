@@ -1,12 +1,14 @@
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 public class Main {
 
-	Scan s;
-	JFrame f;
-	Display d;
-	Cube c;
-
+	static JFrame f;
+	static Cube c;
+	static Scan s;
+	static Display d;
+	
 	// Just initializes the scanner, creates a new JFrame (Java Display Window) and
 	// lets the display class use that JFrame for graphics, and then starts the run
 	// function
@@ -19,14 +21,15 @@ public class Main {
 		f.setSize(500, 500);
 		f.add(d);
 		run();
-
+		
 	}
 
 	// Creates a new main object, which will run the code within the constructor,
 	// but will not cast the instance to an object
 	public static void main(String args[]) {
-		new Main();
-
+		// You cannot define a non-static variable in a static context, so you create a
+		// instance (not static) of the class to do so
+		Main m = new Main();
 	}
 
 	private void run() {
@@ -50,6 +53,10 @@ public class Main {
 			case "cube":
 				cubeSetup();
 				break;
+			case "r":
+				c.R(false);
+				d.repaint();
+				break;
 			default:
 				unrecognized();
 			}
@@ -64,12 +71,9 @@ public class Main {
 		System.out.println("Would you like a solved or random cube?");
 		input1 = s.getInput();
 		c = new Cube(input1);
-
-		/*
-		 * Displays every piece for(int i = 0; i < 6; i++) { for(int a = 0; a < 3; a++)
-		 * { for(int b = 0; b < 3; b++) { System.out.println(c.state[i][a][b]); } } }
-		 */
-
+		d.repaint();
+		System.out.println("Done");
+		
 	}
 
 	// Tells the user that the command is not recognized.
@@ -77,4 +81,5 @@ public class Main {
 		System.out.println("Command not recognized.");
 
 	}
+	
 }
