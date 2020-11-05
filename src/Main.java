@@ -77,14 +77,19 @@ public class Main {
 				c.F();
 				d.repaint();
 				break;
-			case "fp";
+			case "fp":
 				c.F();
 				c.F();
 				c.F();
 				d.repaint();
 				break;
 			default:
-				unrecognized();
+				if(checkMoves(input)) {
+					moveSequence(input);
+					d.repaint();
+				} else {
+					unrecognized();
+				}	
 			}
 		}
 
@@ -100,6 +105,88 @@ public class Main {
 		d.repaint();
 		System.out.println("Done");
 		
+	}
+	
+	private boolean checkMoves(String input) {
+		for(int i = 0; i < input.length(); i++) {
+			String s = Character.toString(input.charAt(i));
+			
+			if(! (s.equals("'") || s.equals("r") ||s.equals("u") || s.equals("f") || s.equals("l") || s.equals("d") || s.equals("b"))){
+				return false;				
+			}
+		}
+		
+		return true;
+		
+	}
+	
+	private void moveSequence(String input) {
+		boolean prime;
+		
+		for(int i = 0; i < input.length(); i++) {
+			prime = false;
+			
+			try {
+				if(Character.toString(input.charAt(i+1)).equals("'")) {
+					prime = true;
+				}
+			} catch(Exception e) {}
+			
+			switch(Character.toString(input.charAt(i))) {
+			case "r":
+				if(prime) {
+					c.R();
+					c.R();
+					c.R();
+				}else {
+					c.R();
+				}
+				break;
+			case "u":
+				if(prime) {
+					c.U();
+					c.U();
+					c.U();
+				}else {
+					c.U();
+				}
+				break;
+			case "f":
+				if(prime) {
+					c.F();
+					c.F();
+					c.F();
+				}else {
+					c.F();
+				}
+				break;
+			case "l":
+				if(prime) {
+					
+				}else {
+					
+				}
+				break;
+			case "d":
+				if(prime) {
+					
+				}else {
+					
+				}
+				break;
+			case "b":
+				if(prime) {
+					
+				}else {
+					
+				}
+				break;
+			case "'":
+				break;
+			default:
+				unrecognized();
+			}
+		}
 	}
 
 	// Tells the user that the command is not recognized.
