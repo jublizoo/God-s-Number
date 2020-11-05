@@ -142,8 +142,35 @@ public class Cube {
 
 	}
 
-	public void L(boolean prime) {
+	public void L() {
+		int[][] temp = new int[6][8];
+		
+		for(int i = 0; i < 6; i++) {
+			for(int b = 0; b < 8; b++) {
+				temp[i][b] = state[i][b];
+			}
+		}
+		state[4][0] = temp[5][0];
+		state[4][7] = temp[5][7];
+		state[4][3] = temp[5][3];
+		state[0][0] = temp[4][0];
+		state[0][7] = temp[4][7];
+		state[0][3] = temp[4][3];
+		state[2][0] = temp[0][0];
+		state[2][7] = temp[0][7];
+		state[2][3] = temp[0][3];
+		state[5][0] = temp[2][0];
+		state[5][7] = temp[2][7];
+		state[5][3] = temp[2][3];
 
+		state[1][0] = temp[1][3];
+		state[1][1] = temp[1][0];
+		state[1][2] = temp[1][1];
+		state[1][3] = temp[1][2];
+		state[1][4] = temp[1][7];
+		state[1][5] = temp[1][4];
+		state[1][6] = temp[1][5];
+		state[1][7] = temp[1][6];
 	}
 
 	public void D() {
@@ -179,7 +206,7 @@ public class Cube {
 
 	}
 
-	public void B(boolean prime) {
+	public void B() {
 
 	}
 }
