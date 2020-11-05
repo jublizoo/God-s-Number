@@ -6,7 +6,7 @@ public class Cube {
 	// The state variable stores the position/scramble of the cube (An array of six
 	// Cube positioned with the integer value corresponding to the face on the
 	// diagram we used, where the top face is yellow, and the front face is green
-	Integer[][] state = new Integer[6][8];
+	int[][] state = new int[6][8];
 	Color[] colors = {Color.YELLOW, Color.RED, Color.GREEN, Color.ORANGE, Color.BLUE, Color.WHITE};
 
 	// TODO: Figure out a way to store the position of a Rubik's cube
@@ -48,29 +48,35 @@ public class Cube {
 
 	public void R(boolean prime) {
 		//If you do not use the clone method, it will permanently link one array to the other
-		Integer[][] temp = state.clone();
+		int[][] temp = new int[6][8];
 		
-		state[4][1] = temp.clone()[0][1];
-		state[4][5] = temp.clone()[0][5];
-		state[4][2] = temp.clone()[0][2];	
-		state[0][1] = temp.clone()[2][1];
-		state[0][5] = temp.clone()[2][5];
-		state[0][2] = temp.clone()[2][2];
-		state[2][1] = temp.clone()[5][1];
-		state[2][5] = temp.clone()[5][5];
-		state[2][2] = temp.clone()[5][2];
-		state[5][1] = temp.clone()[4][1];
-		state[5][5] = temp.clone()[4][5];
-		state[5][2] = temp.clone()[4][2];
+		for(int i = 0; i < 6; i++) {
+			for(int b = 0; b < 8; b++) {
+				temp[i][b] = state[i][b];
+			}
+		}
 		
-		state[3][0] = temp.clone()[3][3];
-		state[3][1] = temp.clone()[3][0];
-		state[3][2] = temp.clone()[3][1];
-		state[3][3] = temp.clone()[3][2];
-		state[3][4] = temp.clone()[3][7];
-		state[3][5] = temp.clone()[3][4];
-		state[3][6] = temp.clone()[3][5];
-		state[3][7] = temp.clone()[3][6];
+		state[4][1] = temp[0][1];		
+		state[4][5] = temp[0][5];
+		state[4][2] = temp[0][2];	
+		state[0][1] = temp[2][1];
+		state[0][5] = temp[2][5];
+		state[0][2] = temp[2][2];
+		state[2][1] = temp[5][1];
+		state[2][5] = temp[5][5];
+		state[2][2] = temp[5][2];
+		state[5][1] = temp[4][1];
+		state[5][5] = temp[4][5];
+		state[5][2] = temp[4][2];
+	
+		state[3][0] = temp[3][3];
+		state[3][1] = temp[3][0];
+		state[3][2] = temp[3][1];
+		state[3][3] = temp[3][2];
+		state[3][4] = temp[3][7];
+		state[3][5] = temp[3][4];
+		state[3][6] = temp[3][5];
+		state[3][7] = temp[3][6];
 		
 	}
 
