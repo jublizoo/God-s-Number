@@ -207,6 +207,34 @@ public class Cube {
 	}
 
 	public void B() {
-
+		int[][] temp = new int[6][8];
+		
+		for(int i = 0; i < 6; i++) {
+			for(int b = 0; b < 8; b++) {
+				temp[i][b] = state[i][b];
+			}
+		}
+		
+		state[0][0] = temp[3][1];
+		state[0][4] = temp[3][5];
+		state[0][1] = temp[3][2];
+		state[3][1] = temp[5][2];
+		state[3][5] = temp[5][6];
+		state[3][2] = temp[5][3];
+		state[5][2] = temp[1][3];
+		state[5][6] = temp[1][7];
+		state[5][3] = temp[1][0];
+		state[1][3] = temp[0][0];
+		state[1][7] = temp[0][4];
+		state[1][0] = temp[0][1];
+		
+		state[4][0] = temp[4][3];
+		state[4][1] = temp[4][0];
+		state[4][2] = temp[4][1];
+		state[4][3] = temp[4][2];
+		state[4][4] = temp[4][7];
+		state[4][5] = temp[4][4];
+		state[4][6] = temp[4][5];
+		state[4][7] = temp[4][6];
 	}
 }

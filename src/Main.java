@@ -58,52 +58,60 @@ public class Main {
 				break;
 			case "r":
 				c.R();
-				d.repaint();
 				break;
 			case "rp":
 				c.R();
 				c.R();
 				c.R();
-				d.repaint();
 				break;
 			case "u":
 				c.U();
-				d.repaint();
 				break;
 			case "up":
 				c.U();
 				c.U();
 				c.U();
-				d.repaint();
 				break;
 			case "f":
 				c.F();
-				d.repaint();
 				break;
 			case "fp":
 				c.F();
 				c.F();
 				c.F();
-				d.repaint();
+				break;
+			case "l":
+				c.L();
+				break;
+			case "lp":
+				c.L();
+				c.L();
+				c.L();
 				break;
 			case "d":
 				c.D();
-				d.repaint();
 				break;
 			case "dp":
 				c.D();
 				c.D();
 				c.D();
-				d.repaint();
+				break;
+			case "b":
+				c.B();
+				break;
+			case "bp":
+				c.B();
+				c.B();
+				c.B();
 				break;
 			default:
 				if(checkMoves(input)) {
 					moveSequence(input);
-					d.repaint();
 				} else {
 					unrecognized();
 				}	
 			}
+			d.repaint();
 		}
 
 	}
@@ -193,9 +201,11 @@ public class Main {
 				break;
 			case "b":
 				if(prime) {
-					
+					c.B();
+					c.B();
+					c.B();
 				}else {
-					
+					c.B();
 				}
 				break;
 			case "'":
