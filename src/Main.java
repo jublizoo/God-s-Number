@@ -56,6 +56,9 @@ public class Main {
 			case "cube":
 				cubeSetup();
 				break;
+			case "cross":
+				callCross();
+				break;
 			case "r":
 				c.R();
 				break;
@@ -141,7 +144,7 @@ public class Main {
 		
 	}
 	
-	private void moveSequence(String input) {
+	private static void moveSequence(String input) {
 		boolean prime;
 		
 		for(int i = 0; i < input.length(); i++) {
@@ -216,6 +219,20 @@ public class Main {
 		}
 	}
 
+	private void callCross() {
+		System.out.println("Would you like incremental, or instant?");
+		String input = s.getInput();
+		
+		if(input.equals("incremental")) {
+			c.cross(true);
+		} else if(input.contentEquals("instant")){
+			c.cross(false);
+		} else {
+			unrecognized();
+		}
+		
+	}
+	
 	// Tells the user that the command is not recognized.
 	public static void unrecognized() {
 		System.out.println("Command not recognized.");
