@@ -59,6 +59,10 @@ public class Main {
 			case "cross":
 				callCross();
 				break;
+			case "alg":
+				System.out.println(c.crossAlg(5, 5));		
+				moveSequence(c.crossAlg(5, 5));
+				break;
 			case "r":
 				c.R();
 				break;
@@ -111,7 +115,22 @@ public class Main {
 				if(checkMoves(input)) {
 					moveSequence(input);
 				} else {
-					unrecognized();
+					try {
+						for(int i = 0; i < Integer.parseInt(input); i++) {
+							c = new Cube("random");
+							callCross();
+						}
+						int sum = 0;
+						for(int i = 0; i < c.allAlgs.size(); i++) {
+							sum += c.allAlgs.get(i).length();
+							System.out.println(c.allAlgs.get(i));
+							System.out.println(c.allScrambles.get(i));
+						}
+						System.out.println((double) sum / (double) c.allAlgs.size());
+						System.out.println(c.minMoves);
+					}catch(Exception e) {
+						unrecognized();
+					}
 				}	
 			}
 			d.repaint();
@@ -220,17 +239,7 @@ public class Main {
 	}
 
 	private void callCross() {
-		System.out.println("Would you like incremental, or instant?");
-		String input = s.getInput();
-		
-		if(input.equals("incremental")) {
-			c.cross(true);
-		} else if(input.contentEquals("instant")){
-			c.cross(false);
-		} else {
-			unrecognized();
-		}
-		
+			c.cross();
 	}
 	
 	// Tells the user that the command is not recognized.

@@ -1,12 +1,15 @@
 import java.awt.Color;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Cube {
 
 	// The state variable stores the position/scramble of the cube (An array of six
 	// Cube positioned with the integer value corresponding to the face on the
 	// diagram we used, where the top face is yellow, and the front face is green
-	int minMoves;
+	int minMoves = 1000;
+	String scramble = "";
+	ArrayList<String> allAlgs = new ArrayList<String>();
+	ArrayList<String> allScrambles = new ArrayList<String>();
 	int[][] state = new int[6][8];
 	int[][] corrected = new int[6][8];
 	Color[] colors = { Color.YELLOW, Color.RED, Color.GREEN, Color.ORANGE, Color.BLUE, Color.WHITE };
@@ -23,7 +26,7 @@ public class Cube {
 			generateSolved();
 			break;
 		case "random":
-
+			generateRandom();
 			break;
 		default:
 			Main.unrecognized();
@@ -41,11 +44,115 @@ public class Cube {
 	}
 
 	private void generateRandom() {
-
+		StringBuilder alg = new StringBuilder("");
+		String possibleMove = "";
+		String possibleMoveChar = "";
+		//Give if the previous move was prime, and if the previous move is the same
+		boolean sameMove = true;
+		
+		generateSolved();
+		
+		
+		for(int i = 0; i < 30; i+=possibleMove.length()) {
+			sameMove = true;
+			
+			while(sameMove) {
+				possibleMove = chooseRandomMove();
+				possibleMoveChar = Character.toString(possibleMove.charAt(0));
+				
+				try {
+					if(Character.toString(alg.charAt(i-1)).equals("'")) {						
+						if(Character.toString(alg.charAt(i-2)).equals(possibleMoveChar)) {
+							sameMove = true;
+						}else {
+							sameMove = false;
+						}
+					}else {						
+						if(Character.toString(alg.charAt(i-1)).equals(possibleMoveChar)) {
+							sameMove = true;
+						}else {
+							sameMove = false;
+						}
+					}
+				}catch(Exception e) {
+					sameMove = false;
+				}
+			}
+			
+			alg.append(possibleMove);
+		}
+		
+		scramble = alg.toString();
+		System.out.println(alg.toString());
+		executeAlg(alg.toString());
+		
+	}
+	
+	private String chooseRandomMove(){
+		double random = Math.random();
+		
+		if(random < 0.1666) {
+			random = Math.random();
+			if(random < 0.3333) {
+				return "r";
+			}else if(random < 0.6666) {
+				return "r'";
+			}else {
+				return "rr";
+			}
+		}else if(random < 0.3333) {
+			random = Math.random();
+			if(random < 0.3333) {
+				return "u";
+			}else if(random < 0.6666) {
+				return "u'";
+			}else {
+				return "uu";
+			}
+		}else if(random < 0.5) {
+			random = Math.random();
+			if(random < 0.3333) {
+				return "f";
+			}else if(random < 0.6666) {
+				return "f'";
+			}else {
+				return "ff";
+			}
+		}else if(random < 0.6666) {
+			random = Math.random();
+			if(random < 0.3333) {
+				return "l";
+			}else if(random < 0.6666) {
+				return "l'";
+			}else {
+				return "ll";
+			}
+		}else if(random < 0.8333) {
+			random = Math.random();
+			if(random < 0.3333) {
+				return "d";
+			}else if(random < 0.6666) {
+				return "d'";
+			}else {
+				return "dd";
+			}
+		}else if(random < 1) {
+			random = Math.random();
+			if(random < 0.3333) {
+				return "b";
+			}else if(random < 0.6666) {
+				return "b'";
+			}else {
+				return "bb";
+			}
+		}else {
+			return null;
+		}
+	
 	}
 
-	public void alg() {
-		executeAlg("rur'u'r'frru'r'u'rur'f'");
+	public void alg(String alg) {
+		executeAlg(alg);
 	}
 
 	public void R() {
@@ -243,8 +350,10 @@ public class Cube {
 		state[4][7] = temp[4][6];
 	}
 
-	public void cross(boolean incremental) {
-		int moves = 0;
+	public void cross() {
+		StringBuilder alg;
+		StringBuilder alg2;
+		StringBuilder alg3;
 		int[][] one = new int[6][8];
 		int[][] two = new int[6][8];
 		int[][] three = new int[6][8];
@@ -256,57 +365,419 @@ public class Cube {
 				three[i][b] = state[i][b];
 			}
 		}
-		
-		if(incremental == true) {
 			
-		}else {
-			for (int i = 0; i < 4; i++) {
-				//Set state to number one
-				//Find first piece
-				//Move up first piece
-				//Set number one to state
-				for (int b = 0; b < 3; b++) {
-					//Set state to number two
-					// Find second piece (2)
-					// Move up second piece
-					//Set number two to state
-					for (int c = 0; c < 2; c++) {
-						//Set state to number three
-						// Find 3rd piece (3)
-						// Move up third piece
-						// Find 4th piece
-						//Move up 4th piece
-						//Move down each piece
-						//Set number three to state
-						secondLayer(/* current state */);
-						// After this is complete, the move count will have already been recorded, so we
-						// will not need more variables to store the states
+		for (int i = 0; i < 4; i++) {
+			
+			
+			//Set state to one
+			for (int c = 0; c < 6; c++) {
+				for (int d = 0; d < 8; d++) {
+					state[c][d] = one[c][d];
+				}
+			}
+			alg = new StringBuilder("");
+			
+			alg.append(crossAlg(findPiece(i)[0], findPiece(i)[1]));
+			executeAlg(crossAlg(findPiece(i)[0], findPiece(i)[1]));
+			
+			//Set two to state
+			for (int c = 0; c < 6; c++) {
+				for (int d = 0; d < 8; d++) {
+					two[c][d] = state[c][d];
+				}
+			}
+			
+			for (int b = 0; b < 3; b++) {
+				
+				//Set state to two
+				for (int c = 0; c < 6; c++) {
+					for (int d = 0; d < 8; d++) {
+						state[c][d] = two[c][d];
+					}
+				}
+				alg2 = new StringBuilder(alg.toString());
+				
+				alg2.append(crossAlg(findPiece(b)[0], findPiece(b)[1]));
+				executeAlg(crossAlg(findPiece(b)[0], findPiece(b)[1]));
+				
+				//Set three to state
+				for (int c = 0; c < 6; c++) {
+					for (int d = 0; d < 8; d++) {
+						three[c][d] = state[c][d];
+					}
+				}
+				
+				for (int c = 0; c < 2; c++) {
+					//Set state to three
+					for (int d = 0; d < 6; d++) {
+						for (int e = 0; e < 8; e++) {
+							state[d][e] = three[d][e];
+						}
+					}
+					alg3 = new StringBuilder(alg2.toString());;
+					
+					alg3.append(crossAlg(findPiece(c)[0], findPiece(c)[1]));
+					executeAlg(crossAlg(findPiece(c)[0], findPiece(c)[1]));
+					alg3.append(crossAlg(findPiece(c)[0], findPiece(c)[1]));
+					executeAlg(crossAlg(findPiece(c)[0], findPiece(c)[1]));
+					System.out.println("Before alg: " + alg3);
+					
+					alg3.append(pullDaisy());
+					System.out.println("Whole alg: " + alg3);
+					// After this is complete, the move count will have already been recorded, so we
+					// will not need more variables to store the states	
+					
+					allAlgs.add(alg3.toString());
+					allScrambles.add(scramble);
+					
+					if(alg3.length() < minMoves) {
+						minMoves = alg3.length();
+					}
+				}
+			}	
+		}
+
+	}
+	
+	public int[] findPiece(int iterationGoal) {
+		int[] piece = new int[2];
+		boolean contLoop = true;
+		int iteration = 0;
+		
+		for(int i = 1; i < 6; i++) {
+			for(int b = 4; b < 8; b++) {
+				if(contLoop) {
+					if(state[i][b] == 5) {
+						piece[0] = i;
+						piece[1] = b;
+						if(iteration == iterationGoal) {
+							contLoop = false;
+						}		
+						iteration++;
 					}
 				}
 			}
 		}
 
-	}
-	
-	public String algTransfer(String alg, int face) {
-		return "";
-		
+		return piece;
 	}
 	
 	public String crossAlg(int face, int piece) {
+		StringBuilder alg = new StringBuilder("");
+		StringBuilder adAlg = new StringBuilder("");
+		int adBottom = 0;
+		int transferNum = 0;
 		
-		String sideTop = "ffdrf'r'";
-		String sideBottom = "drf'r'";
-		String sideLeft = "ul'u'";
-		String sideRight;
+		//change back face
+		if(face == 4) {
+			switch(piece) {
+			case 4:
+				piece = 6;
+				break;
+			case 5:
+				piece = 7;
+				break;
+			case 6:
+				piece = 4;
+				break;
+			case 7:
+				piece = 5;
+				break;
+			}
+		}
 		
-		return "";
 		
-		//if face is 0, do nothing
-		//if face is 1-4, move piece to 
+		
+		if(0 < face && face < 5) {
+			
+			
+			switch(face) {
+			case 1:
+				transferNum = 3;
+				break;
+			case 2:
+				transferNum = 0;
+				break;
+			case 3:
+				transferNum = 1;
+				break;
+			case 4:
+				transferNum = 2;
+				break;
+			}
+			
+			switch(piece) {
+			case 4:
+				alg.append(algTransfer("f", transferNum));
+				for(int i = 0; i < getAdjustedTurns(face) - 1; i++){
+					alg.append("u");
+				}
+				alg.append(algTransfer("r", transferNum));
+				break;
+			case 5:
+				for(int i = 0; i < getAdjustedTurns(face) - 1; i++){
+					alg.append("u");
+				}
+				alg.append(algTransfer("r", transferNum));
+				break;
+			case 6:
+				for(int i = 0; i < getAdjustedTurns(face) - 1; i++){
+					alg.append("u");
+				}
+				alg.append(algTransfer("f'rf", transferNum));
+				break;
+			case 7:
+				for(int i = 0; i < getAdjustedTurns(face) + 1; i++){
+					alg.append("u");
+				}
+				alg.append(algTransfer("l'", transferNum)); 
+				break;
+			}
+			
+		}else if(face == 5) {
+			switch(piece) {
+			case 6:
+				adBottom = 4;
+				break;
+			case 5:
+				adBottom = 3;
+				break;
+			case 4:
+				adBottom = 2;
+				break;
+			case 7:
+				adBottom = 1;
+				break;
+			}
+
+			for(int i = 0; i < getAdjustedTurns(adBottom); i++){
+				alg.append("u");
+			}
+			transferNum = piece - 4;
+			alg.append(algTransfer("ff", transferNum));
+		}
+		
+		return alg.toString();
 		
 	}
 	
+	public String pullDaisy(){
+		
+		StringBuilder alg = new StringBuilder("");
+		int transferNum = 0;
+		boolean anyLeft;
+		
+		for(int i = 0; i < 4; i++) {
+			for(int b = 1; b < 5; b++) {
+				switch(b) {
+				case 1:
+					transferNum = 3;
+					break;
+				case 2:
+					transferNum = 0;
+					break;
+				case 3:
+					transferNum = 1;
+					break;
+				case 4:
+					transferNum = 2;
+					break;
+				}
+				
+				if(b == 4) {
+					if(state[b][6] == b && state[0][8 - b] == 5) {
+						alg.append(algTransfer("ff", transferNum));
+						executeAlg(algTransfer("ff", transferNum));
+					}
+				}else {
+					if(state[b][4] == b && state[0][8 - b] == 5) {
+						alg.append(algTransfer("ff", transferNum));	
+						executeAlg(algTransfer("ff", transferNum));
+					}
+				}	
+			}
+			
+			anyLeft = false;
+			
+			for(int b = 4; b < 8; b++) {
+				if(state[0][b] == 5) {
+					anyLeft = true;
+					break;
+				}
+			}
+			
+			if(anyLeft) {
+				alg.append("u");	
+				executeAlg("u");
+			}else {
+				break;
+			}
+		}
+		
+		System.out.println("Pull alg: " +alg);
+		return(alg.toString());
+				
+	}
+	
+	private int getAdjustedTurns(int face){
+		boolean contLoop = true;
+		int counter = 0;
+		
+		for(int i = 4; i < 8; i++) {
+			if(contLoop == true) {
+				if(state[0][i] != 5) {
+					//8 - i is turns for i to get to piece 4
+					//4 - face is turns for piece 4 to get to the face
+					//-1 is because you want the open space on the right, not in front
+					for(int b = 0; b < 8 - i + 4 - face; b++) {
+						counter++;
+					}
+					
+					contLoop = false;
+				}	
+			}
+		}
+		
+		return counter;
+	}
+
+	public String algTransfer(String alg, int num) {
+		StringBuilder newAlg = new StringBuilder("");
+		
+		switch(num) {
+		case 1:
+			for(int i = 0; i < alg.length(); i++) {
+				switch(Character.toString(alg.charAt(i))){
+					case "r":
+						newAlg.append("b");
+						break;
+					case "f":
+						newAlg.append("r");
+						break;
+					case "l":
+						newAlg.append("f");
+						break;
+					case "b":
+						newAlg.append("l");
+						break;
+					default:
+						newAlg.append(Character.toString(alg.charAt(i)));
+				}
+			}
+			break;
+		case 2:
+			for(int i = 0; i < alg.length(); i++) {
+				switch(Character.toString(alg.charAt(i))){
+					case "r":
+						newAlg.append("l");
+						break;
+					case "f":
+						newAlg.append("b");
+						break;
+					case "l":
+						newAlg.append("r");
+						break;
+					case "b":
+						newAlg.append("f");
+						break;
+					default:
+						newAlg.append(Character.toString(alg.charAt(i)));
+				}
+			}
+			break;
+		case 3:
+			for(int i = 0; i < alg.length(); i++) {
+				switch(Character.toString(alg.charAt(i))){
+					case "r":
+						newAlg.append("f");
+						break;
+					case "f":
+						newAlg.append("l");
+						break;
+					case "l":
+						newAlg.append("b");
+						break;
+					case "b":
+						newAlg.append("r");
+						break;
+					default:
+						newAlg.append(Character.toString(alg.charAt(i)));
+				}
+			}
+			//replace("r","f").replace("f", "l").replace("l", "b").replace("b", "r");
+			break;
+		default:
+			newAlg.append(alg);
+		}
+		
+		return(newAlg.toString());
+		
+	}
+	
+	public String reverseAlg(String alg){
+		StringBuilder rAlg = new StringBuilder("");
+		String c;
+		boolean prime;
+		
+		for(int i = alg.length() - 1; i >= 0; i--) {
+			c = Character.toString(alg.charAt(i));
+			prime = false;
+			
+			try {
+				if(Character.toString(alg.charAt(i+1)).equals("'")) {
+					prime = true;
+				}
+			}catch(Exception e) {}
+			
+			if(prime) {
+				switch(c) {
+				case "r":
+					rAlg.append("r");
+					break;
+				case "u":
+					rAlg.append("u");
+					break;
+				case "f":
+					rAlg.append("f");
+					break;
+				case "l":
+					rAlg.append("l");
+					break;
+				case "d":
+					rAlg.append("d");
+					break;
+				case "b":
+					rAlg.append("b");
+					break;
+				}
+			}else {
+				switch(c) {
+				case "r":
+					rAlg.append("r'");
+					break;
+				case "u":
+					rAlg.append("u'");
+					break;
+				case "f":
+					rAlg.append("f'");
+					break;
+				case "l":
+					rAlg.append("l'");
+					break;
+				case "d":
+					rAlg.append("d'");
+					break;
+				case "b":
+					rAlg.append("b'");
+					break;
+				}
+			}
+				
+		}
+		
+		return rAlg.toString();
+	}
+		
 	public void executeAlg(String alg) {
 		boolean prime;
 		
@@ -379,10 +850,15 @@ public class Cube {
 
 			}
 		}
+		
 	}
 
+	private void condenseAlg(String alg) {
+		
+	}
+	
 	public void secondLayer() {
-
+		
 	}
 
 	public void OLL() {
