@@ -59,10 +59,6 @@ public class Main {
 			case "cross":
 				callCross();
 				break;
-			case "alg":
-				System.out.println(c.crossAlg(5, 5));		
-				moveSequence(c.crossAlg(5, 5));
-				break;
 			case "r":
 				c.R();
 				break;
@@ -121,13 +117,23 @@ public class Main {
 							callCross();
 						}
 						int sum = 0;
+						int numSame = 0;
+						
 						for(int i = 0; i < c.allAlgs.size(); i++) {
 							sum += c.allAlgs.get(i).length();
-							System.out.println(c.allAlgs.get(i));
-							System.out.println(c.allScrambles.get(i));
+							
+							try {
+								if(c.allAlgs.get(i).equals(c.allAlgs.get(i-1))) {
+									numSame++;
+								}
+							}catch(Exception e) {}
 						}
-						System.out.println((double) sum / (double) c.allAlgs.size());
+						
+						System.out.println("avg: " + (double) sum / (double) c.allAlgs.size());
+						System.out.println("numSame: " + numSame);
+						System.out.println(c.minScramble);
 						System.out.println(c.minMoves);
+						
 					}catch(Exception e) {
 						unrecognized();
 					}

@@ -6,10 +6,11 @@ public class Cube {
 	// The state variable stores the position/scramble of the cube (An array of six
 	// Cube positioned with the integer value corresponding to the face on the
 	// diagram we used, where the top face is yellow, and the front face is green
-	int minMoves = 1000;
+	static String minMoves = "                                                                                                      ";
+	static String minScramble = "";
 	String scramble = "";
-	ArrayList<String> allAlgs = new ArrayList<String>();
-	ArrayList<String> allScrambles = new ArrayList<String>();
+	static ArrayList<String> allAlgs = new ArrayList<String>();
+	static ArrayList<String> allScrambles = new ArrayList<String>();
 	int[][] state = new int[6][8];
 	int[][] corrected = new int[6][8];
 	Color[] colors = { Color.YELLOW, Color.RED, Color.GREEN, Color.ORANGE, Color.BLUE, Color.WHITE };
@@ -53,7 +54,7 @@ public class Cube {
 		generateSolved();
 		
 		
-		for(int i = 0; i < 30; i+=possibleMove.length()) {
+		for(int i = 0; i < 35; i+=possibleMove.length()) {
 			sameMove = true;
 			
 			while(sameMove) {
@@ -418,20 +419,21 @@ public class Cube {
 					
 					alg3.append(crossAlg(findPiece(c)[0], findPiece(c)[1]));
 					executeAlg(crossAlg(findPiece(c)[0], findPiece(c)[1]));
-					alg3.append(crossAlg(findPiece(c)[0], findPiece(c)[1]));
-					executeAlg(crossAlg(findPiece(c)[0], findPiece(c)[1]));
-					System.out.println("Before alg: " + alg3);
+					alg3.append(crossAlg(findPiece(0)[0], findPiece(0)[1]));
+					executeAlg(crossAlg(findPiece(0)[0], findPiece(0)[1]));
 					
 					alg3.append(pullDaisy());
-					System.out.println("Whole alg: " + alg3);
 					// After this is complete, the move count will have already been recorded, so we
 					// will not need more variables to store the states	
 					
+					alg3 = new StringBuilder(condenseAlg(condenseAlg(alg3.toString())));
 					allAlgs.add(alg3.toString());
 					allScrambles.add(scramble);
-					
-					if(alg3.length() < minMoves) {
-						minMoves = alg3.length();
+					System.out.println("alg: " + alg3);
+
+					if(alg3.length() < minMoves.length()) {
+						minMoves = alg3.toString();
+						minScramble = scramble;
 					}
 				}
 			}	
@@ -614,7 +616,6 @@ public class Cube {
 			}
 		}
 		
-		System.out.println("Pull alg: " +alg);
 		return(alg.toString());
 				
 	}
@@ -714,7 +715,7 @@ public class Cube {
 		
 	}
 	
-	public String reverseAlg(String alg){
+	public static String reverseAlg(String alg){
 		StringBuilder rAlg = new StringBuilder("");
 		String c;
 		boolean prime;
@@ -853,7 +854,123 @@ public class Cube {
 		
 	}
 
-	private void condenseAlg(String alg) {
+	public static String condenseAlg(String alg) {
+		StringBuilder sAlg = new StringBuilder("");
+		String c = "";
+		boolean three;
+		boolean four;
+		
+		for(int i = 0; i < alg.length(); i++) {
+			three = true;
+			four = true;
+			c = "";
+			try {c = Character.toString(alg.charAt(i+1));} catch(Exception e) {}
+			if(c.equals("'")) {
+				for(int b = 1; b < 4; b++) {
+					try {
+						c = Character.toString(alg.charAt(i + 2 * b + 1));
+						if(!c.equals("'")) {
+							if(b < 3) {
+								three = false;
+								four = false;
+							} else {
+								four = false;
+							}
+							
+							break;
+						}
+					} catch(Exception e) {
+						if(b < 3) {
+							three = false;
+							four = false;
+						} else {
+							four = false;
+						}
+						
+						break;
+					}
+				}
+				for(int b = 1; b < 4; b++) {
+					try {
+						c = Character.toString(alg.charAt(i + 2 * b));
+						if(!c.equals(Character.toString(alg.charAt(i)))) {
+							if(b < 3) {
+								three = false;
+								four = false;
+							} else {
+								four = false;
+							}
+							
+							break;
+						}
+					} catch(Exception e) {
+						if(b < 3) {
+							three = false;
+							four = false;
+						} else {
+							four = false;
+						}
+						
+						break;
+					}
+					
+				}	
+				try {c = Character.toString(alg.charAt(i));} catch(Exception e) {}
+				if(three) {
+					if(four) {
+						//Append Nothing
+						i += 8 - 1;
+					}else {
+						sAlg.append(c);
+						i += 6 - 1;
+					}
+				}else {
+					sAlg.append(c + "'");
+					i++;
+				}
+				
+			}else {
+				for(int b = 1; b < 4; b++) {
+					try {
+						c = Character.toString(alg.charAt(i +  b));
+						if(!c.equals(Character.toString(alg.charAt(i)))) {
+							if(b < 3) {
+								three = false;
+								four = false;
+							} else {
+								four = false;
+							}
+							
+							break;
+						}
+					} catch(Exception e) {
+						if(b < 3) {
+							three = false;
+							four = false;
+						} else {
+							four = false;
+						}
+						
+						break;
+					}
+					
+				}	
+				
+				try {c = Character.toString(alg.charAt(i));} catch(Exception e) {}
+				if(three) {
+					if(four) {
+						//Append Nothing
+						i += 4 - 1;
+					}else {
+						sAlg.append(c + "'");
+						i += 3 - 1;
+					}
+				}else {
+					sAlg.append(c);
+				}
+			}
+		}
+		return(sAlg.toString());
 		
 	}
 	
