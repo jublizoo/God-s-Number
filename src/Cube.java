@@ -6,11 +6,15 @@ public class Cube {
 	// The state variable stores the position/scramble of the cube (An array of six
 	// Cube positioned with the integer value corresponding to the face on the
 	// diagram we used, where the top face is yellow, and the front face is green
-	static String minMoves = "                                                                                                      ";
-	static String minScramble = "";
 	String scramble = "";
+	static String minMoves = "";
+	static String minScramble = "";
 	static ArrayList<String> allAlgs = new ArrayList<String>();
 	static ArrayList<String> allScrambles = new ArrayList<String>();
+	
+	int thisMinMoves = 1000;
+	static ArrayList<Integer> minAlgs = new ArrayList<Integer>();
+	
 	int[][] state = new int[6][8];
 	int[][] corrected = new int[6][8];
 	Color[] colors = { Color.YELLOW, Color.RED, Color.GREEN, Color.ORANGE, Color.BLUE, Color.WHITE };
@@ -408,7 +412,7 @@ public class Cube {
 					}
 				}
 				
-				for (int c = 0; c < 2; c++) {
+				for (int c = 0; c < 2; c++  ) {
 					//Set state to three
 					for (int d = 0; d < 6; d++) {
 						for (int e = 0; e < 8; e++) {
@@ -427,9 +431,14 @@ public class Cube {
 					// will not need more variables to store the states	
 					
 					alg3 = new StringBuilder(condenseAlg(condenseAlg(alg3.toString())));
+									
 					allAlgs.add(alg3.toString());
 					allScrambles.add(scramble);
 					System.out.println("alg: " + alg3);
+					
+					if(alg3.length() < thisMinMoves) {
+						thisMinMoves = alg3.length();
+					}
 
 					if(alg3.length() < minMoves.length()) {
 						minMoves = alg3.toString();
@@ -438,6 +447,8 @@ public class Cube {
 				}
 			}	
 		}
+		
+		minAlgs.add(thisMinMoves);
 
 	}
 	

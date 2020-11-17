@@ -59,6 +59,14 @@ public class Main {
 			case "cross":
 				callCross();
 				break;
+			case "alg":
+				for(int i = 0; i < 20; i++) {
+					c = new Cube("random");
+					for(int b = 0; b < 4; b++) {
+						System.out.println(c.findPiece(b)[0] + " " + c.findPiece(b)[1]);
+					}
+				}
+				break;
 			case "r":
 				c.R();
 				break;
@@ -118,6 +126,7 @@ public class Main {
 						}
 						int sum = 0;
 						int numSame = 0;
+						int biggestMin = 0;
 						
 						for(int i = 0; i < c.allAlgs.size(); i++) {
 							sum += c.allAlgs.get(i).length();
@@ -129,10 +138,17 @@ public class Main {
 							}catch(Exception e) {}
 						}
 						
+						for(int i = 0; i < Cube.minAlgs.size(); i++) {
+							if(Cube.minAlgs.get(i) > biggestMin) {
+								biggestMin = Cube.minAlgs.get(i);
+							}
+						}
+						
 						System.out.println("avg: " + (double) sum / (double) c.allAlgs.size());
 						System.out.println("numSame: " + numSame);
-						System.out.println(c.minScramble);
-						System.out.println(c.minMoves);
+						System.out.println("Scramble for shortest solution: " + c.minScramble);
+						System.out.println("Shortest Solution: " + c.minMoves);
+						System.out.println("Daisy Cross God's Number: " + biggestMin);
 						
 					}catch(Exception e) {
 						unrecognized();
