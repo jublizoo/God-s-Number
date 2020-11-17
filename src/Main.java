@@ -128,11 +128,11 @@ public class Main {
 						int numSame = 0;
 						int biggestMin = 0;
 						
-						for(int i = 0; i < c.allAlgs.size(); i++) {
-							sum += c.allAlgs.get(i).length();
+						for(int i = 0; i < Cube.allAlgs.size(); i++) {
+							sum += Cube.allAlgs.get(i).length();
 							
 							try {
-								if(c.allAlgs.get(i).equals(c.allAlgs.get(i-1))) {
+								if(Cube.allAlgs.get(i).equals(Cube.allAlgs.get(i-1))) {
 									numSame++;
 								}
 							}catch(Exception e) {}
@@ -143,11 +143,12 @@ public class Main {
 								biggestMin = Cube.minAlgs.get(i);
 							}
 						}
-						
-						System.out.println("avg: " + (double) sum / (double) c.allAlgs.size());
+
+						System.out.println("avg: " + (double) sum / (double) Cube.allAlgs.size());
 						System.out.println("numSame: " + numSame);
-						System.out.println("Scramble for shortest solution: " + c.minScramble);
-						System.out.println("Shortest Solution: " + c.minMoves);
+						
+						System.out.println("Scramble for shortest solution: " + Cube.minScramble);
+						System.out.println("Shortest Solution: " + Cube.minMoves);
 						System.out.println("Daisy Cross God's Number: " + biggestMin);
 						
 					}catch(Exception e) {

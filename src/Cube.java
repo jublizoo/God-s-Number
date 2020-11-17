@@ -7,7 +7,7 @@ public class Cube {
 	// Cube positioned with the integer value corresponding to the face on the
 	// diagram we used, where the top face is yellow, and the front face is green
 	String scramble = "";
-	static String minMoves = "";
+	static String minMoves = "                                                      ";
 	static String minScramble = "";
 	static ArrayList<String> allAlgs = new ArrayList<String>();
 	static ArrayList<String> allScrambles = new ArrayList<String>();
